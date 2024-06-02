@@ -1,48 +1,132 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require('fs');
+const { features } = require("process");
 // TODO: Create an array of questions for user input
-inquirer
-const questions = [{
-    type: 'input',
-    message: 'What is your name?'.magenta,
-    name: 'name',
-},
-{
-    type: "input",
-    message: "Where are you from?".magenta,
-    name: "location",
-},
-{
-    type: "input",
-    message: "Enter a bio?".magenta,
-    name: "bio",
-},
-{
-    type: "input",
-    message: "What is your Linkedin?".magenta,
-    name: "linkedin",
-},
-{
-    type: "input",
-    message: "What is your Github Username?".magenta,
-    name: "github",
-},];
+const generateREADME = ({title, description, installation, usage, credits, license, badges, features, contribute, tests, questions, email }) =>
+`#${title}
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {
+## Description
+
+${description}
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+
+## Installation
+
+${installation}
+
+## Usage
+
+${usage}
+
+### Reach Me
+
+${questions}
+
+${email}
+
+## Credits
+
+${credits}
+
+## Lisence
+
+${license}
+
+## Badges
+
+${badges}
+
+## Features
+
+${features}
+
+## How to Contribute
+
+${contribute}
+
+## Tests
+
+${tests}
+`;
+
+function writeToFile() {
     inquirer
-        .prompt([questions])
-        .then((data) => {
-            const { fileName, data } = data
-            const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
-            const data = `#`;
-            fs.writeFile('README.md', (data), (err) =>
+        .prompt([
+            {
+                type: 'input',
+                message: 'What is the title of your project?',
+                name: 'title',
+            },
+            {
+                type: "input",
+                message: "Write a brief description?",
+                name: "description",
+            },
+            {
+                type: "input",
+                message: "What is the installation process?",
+                name: "installation",
+            },
+            {
+                type: "input",
+                message: "How is this project used? What are the steps?",
+                name: "usage",
+            },
+            {
+                type: "input",
+                message: "What is your github?",
+                name: "questions",
+            },
+            {
+                type: "input",
+                message: "What is your email?",
+                name: "email",
+            },
+            {
+                type: "input",
+                message: "Add who worked on the project.",
+                name: "credits",
+            },
+            {
+                type: "input",
+                message: "What license (if any) does this use?",
+                name: "license",
+            },
+            {
+                type: "input",
+                message: "Add some badges.",
+                name: "badges",
+            },
+            {
+                type: "input",
+                message: "What are the important features?",
+                name: "features",
+            },
+            {
+                type: "input",
+                message: "How can people contribute?",
+                name: "contribute",
+            },
+            {
+                type: "input",
+                message: "Have you written TEST for this application?",
+                name: "tests",
+            },
+        ])
+        .then((answers) => {
+            const readme = generateREADME(answers);
+            fs.writeFile('README.md', (readme), (err) =>
                 err ? console.error(err) : console.log('Success!')
             );
         });
 }
-
 // TODO: Create a function to initialize app
 function init() {
     writeToFile();
