@@ -48,3 +48,7 @@ You can’t
 ## Tests
 
 I wrote no tests for this
+
+## Video Demo
+
+[![Code Demo!](screenshot.png)](https://youtu.be/L5qWK758ukM "Demonstrating the README Creator")
